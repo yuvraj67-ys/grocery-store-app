@@ -1,0 +1,27 @@
+{
+  "common": {
+    "app_name": "FreshCart",
+    "shop": "Shop",
+    "cart": "Cart",
+    "login": "Login",
+    "logout": "Logout"
+  },
+  "shop": {
+    "search_placeholder": "Search atta, dal, rice...",
+    "add_to_cart": "Add to Cart",
+    "out_of_stock": "Out of Stock",
+    "voice_hint": "Speak to search..."
+  },
+  "cart": {
+    "title": "Your Cart",
+    "empty": "Your cart is empty 🛒",
+    "total": "Total",
+    "proceed_cod": "Place Order (Cash on Delivery)",
+    "order_whatsapp": "Order via WhatsApp",
+    "landmark": "Nearby Landmark (Mandir, School, etc.)",
+    "time_slot": "Delivery Time",
+    "morning": "Morning (8 AM - 12 PM)",
+    "evening": "Evening (4 PM - 8 PM)",
+    "notes": "Any special instructions?"
+  }
+}
