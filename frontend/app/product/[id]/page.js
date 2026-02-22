@@ -42,7 +42,7 @@ export default function ProductDetail({ params }) {
 
       {/* Image Gallery (Simplified for quick load) */}
       <div className="bg-white w-full h-72 relative border-b">
-        <Image src={product.image || 'https://i.ibb.co/0y6mX1D/placeholder.png'} layout="fill" objectFit="contain" alt={product.name} />
+        <Image src={product.image || '/placeholder.svg'} layout="fill" objectFit="contain" alt={product.name} />
       </div>
 
       <div className="bg-white p-4 mb-2 shadow-sm">
