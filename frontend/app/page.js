@@ -135,7 +135,7 @@ export default function Home() {
                   
                   <Link href={`/product/${product.id}`}>
                     <div className="relative h-32 w-full bg-gray-50 p-2">
-                      <Image src={product.image || 'https://i.ibb.co/0y6mX1D/placeholder.png'} alt={product.name} layout="fill" objectFit="contain" />
+                      <Image src={product.image || '/placeholder.svg'} alt={product.name} layout="fill" objectFit="contain" />
                     </div>
                   </Link>
                   
