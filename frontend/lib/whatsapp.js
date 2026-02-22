@@ -1,5 +1,5 @@
 export const getWhatsAppLink = (cart, total, address, notes) => {
-  const shopPhone = "919876543210"; // ⚠️ CHANGE THIS TO YOUR NUMBER
+  const shopPhone = "918112294119"; // ⚠️ CHANGE THIS TO YOUR NUMBER
 
   let message = `🛒 *नया ऑर्डर (New Order)* 🛒\n\n`;
   message += `📦 *सामान (Items):*\n`;
