@@ -1,0 +1,21 @@
+{
+  "name": "FreshCart Kirana",
+  "short_name": "FreshCart",
+  "description": "Your local village grocery store",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#10B981",
+  "icons": [
+    {
+      "src": "https://i.ibb.co/0y6mX1D/placeholder.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://i.ibb.co/0y6mX1D/placeholder.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
