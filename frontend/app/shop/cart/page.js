@@ -132,7 +132,7 @@ export default function Cart() {
 
   // WhatsApp order confirmation
   const sendWhatsAppConfirmation = (order) => {
-    const phone = '919876543210'; // 🔥 REPLACE WITH YOUR NUMBER
+    const phone = '918112294119'; // 🔥 REPLACE WITH YOUR NUMBER
     const items = order.items.map(i => `• ${i.name}${i.variant ? ` (${i.variant})` : ''} x${i.qty} = ₹${i.subtotal}`).join('\n');
     const message = `
 *🛒 NEW ORDER - FreshCart* 🛒
