@@ -18,7 +18,6 @@
     "react-icons": "5.0.1",
     "react-toastify": "10.0.4",
     "swiper": "^11.0.5",
-    "framer-motion": "^11.0.3",
     "react-countdown": "^2.3.5",
     "recharts": "^2.12.0"
   },
