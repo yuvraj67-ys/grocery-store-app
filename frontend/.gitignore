@@ -1,0 +1,33 @@
+# Dependencies
+node_modules
+.next
+
+# Build outputs
+dist
+out
+
+# Environment files
+.env*.local
+!.env.example
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# PWA
+public/sw.js
+public/workbox-*.js
+
+# Logs
+*.log
+npm-debug.log*
+
+# Testing
+coverage
+.nyc_output
