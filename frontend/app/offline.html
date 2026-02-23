@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline - FreshCart</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: white;
+    }
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+    .icon { font-size: 60px; margin-bottom: 20px; }
+    h1 { color: #111827; font-size: 24px; margin-bottom: 10px; }
+    p { color: #6B7280; margin-bottom: 20px; line-height: 1.5; }
+    .btn {
+      background: #10B981;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn:hover { background: #059669; }
+    .hint { font-size: 12px; color: #9CA3AF; margin-top: 20px; }
+    .language-toggle {
+      position: absolute; top: 20px; right: 20px;
+      background: rgba(255,255,255,0.2);
+      border: none; color: white; padding: 8px 16px;
+      border-radius: 20px; cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <button class="language-toggle" onclick="toggleLang()">English / हिंदी</button>
+  
+  <div class="card">
+    <div class="icon">📴</div>
+    <h1 id="title">You're Offline</h1>
+    <p id="desc">Check your internet connection and try again. Your cart is saved locally!</p>
+    <button class="btn" onclick="window.location.reload()">
+      🔄 <span id="retry">Retry</span>
+    </button>
+    <p class="hint" id="hint">Tip: Add this app to home screen for faster access</p>
+  </div>
+
+  <script>
+    let isHindi = true;
+    const content = {
+      hi: {
+        title: 'आप ऑफ़लाइन हैं',
+        desc: 'अपना इंटरनेट चेक करें और दोबारा try करें। आपका कार्ट सेव है!',
+        retry: 'दोबारा try करें',
+        hint: 'Tip: होम स्क्रीन पर add करें तेज़ access के लिए'
+      },
+      en: {
+        title: "You're Offline",
+        desc: 'Check your internet and try again. Your cart is saved locally!',
+        retry: 'Retry',
+        hint: 'Tip: Add to home screen for faster access'
+      }
+    };
+
+    function toggleLang() {
+      isHindi = !isHindi;
+      const c = content[isHindi ? 'hi' : 'en'];
+      document.getElementById('title').textContent = c.title;
+      document.getElementById('desc').textContent = c.desc;
+      document.getElementById('retry').textContent = c.retry;
+      document.getElementById('hint').textContent = c.hint;
+    }
+
+    // Auto-detect language
+    if (navigator.language?.startsWith('en')) {
+      toggleLang(); // Switch to English
+    }
+
+    // Listen for online event
+    window.addEventListener('online', () => {
+      if (confirm(isHindi ? '🎉 आप ऑनलाइन हैं! Refresh करें?' : '🎉 You\'re online! Refresh?')) {
+        window.location.reload();
+      }
+    });
+  </script>
+</body>
+</html>
