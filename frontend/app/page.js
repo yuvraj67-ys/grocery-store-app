@@ -1,154 +1,89 @@
 "use client";
-import { useState, useEffect } from 'react';
-import { db } from '../lib/firebase';
-import { ref, onValue } from 'firebase/database';
-import { useCart } from '../context/CartContext';
-import { FaSearch, FaMicrophone, FaMapMarkerAlt, FaClock } from 'react-icons/fa';
-import Image from 'next/image';
 import Link from 'next/link';
 
-// Swiper Carousel
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Pagination } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/pagination';
+// Simple banner data (no Swiper needed)
+const banners = [
+  { id: 1, title: "Fresh Vegetables", bg: "bg-green-100" },
+  { id: 2, title: "Daily Essentials", bg: "bg-blue-100" },
+  { id: 3, title: "Festival Offers", bg: "bg-orange-100" },
+];
+
+// Simple categories
+const categories = [
+  { id: 1, name: "Vegetables", icon: "🥬" },
+  { id: 2, name: "Fruits", icon: "🍎" },
+  { id: 3, name: "Dairy", icon: "🥛" },
+  { id: 4, name: "Atta & Rice", icon: "🌾" },
+  { id: 5, name: "Oil & Spices", icon: "🧂" },
+  { id: 6, name: "Snacks", icon: "🍪" },
+];
 
 export default function Home() {
-  const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [banners, setBanners] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const { addToCart } = useCart();
-
-  useEffect(() => {
-    // Fetch Products
-    onValue(ref(db, 'products'), (snapshot) => {
-      const data = snapshot.val();
-      if (data) setProducts(Object.keys(data).map(key => ({ id: key, ...data[key] })).reverse());
-      setLoading(false);
-    });
-
-    // Fetch Categories
-    onValue(ref(db, 'categories'), (snapshot) => {
-      const data = snapshot.val();
-      if (data) setCategories(Object.keys(data).map(key => ({ id: key, ...data[key] })));
-    });
-
-    // Fetch Banners
-    onValue(ref(db, 'banners'), (snapshot) => {
-      const data = snapshot.val();
-      if (data) setBanners(Object.keys(data).map(key => ({ id: key, ...data[key] })));
-    });
-  }, []);
-
   return (
-    <div className="bg-gray-50 min-h-screen pb-20">
-      {/* Top Header */}
-      <div className="bg-white p-4 shadow-sm sticky top-0 z-40">
-        <div className="flex justify-between items-center mb-3">
-          <div className="flex items-center gap-2">
-            <FaMapMarkerAlt className="text-primary text-xl" />
-            <div>
-              <p className="text-xs font-bold text-gray-800 flex items-center gap-1">
-                Delivery in 10-20 mins <FaClock className="text-yellow-500" />
-              </p>
-              <p className="text-sm text-gray-500 truncate w-48">Apna Gaon, Kirana Store ke pass...</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Search Bar linked to /search */}
-        <div className="flex gap-2">
-          <Link href="/search" className="relative flex-1">
-            <FaSearch className="absolute left-3 top-3.5 text-gray-400" />
-            <div className="w-full pl-10 pr-4 py-3 bg-gray-100 border border-gray-200 rounded-xl text-sm text-gray-500 flex items-center">
-              Search 'आटा' or 'दाल'...
-            </div>
-          </Link>
-          <Link href="/search" className="bg-green-100 text-green-700 p-3 rounded-xl border border-green-200 flex items-center justify-center">
-            <FaMicrophone />
+    <div className="min-h-screen bg-gray-50">
+      {/* Hero Section */}
+      <div className="bg-primary text-white py-12 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-3xl font-bold mb-4">🛒 FreshCart</h1>
+          <p className="text-lg mb-6">Your village kirana store, now online!</p>
+          <Link 
+            href="/shop" 
+            className="bg-white text-primary px-6 py-3 rounded-lg font-bold hover:bg-gray-100"
+          >
+            Start Shopping →
           </Link>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-6">
-        
-        {/* Dynamic Banner Carousel */}
-        {banners.length > 0 && (
-          <div className="rounded-xl overflow-hidden shadow-sm">
-            <Swiper modules={[Autoplay, Pagination]} autoplay={{ delay: 3000 }} pagination={{ clickable: true }} className="w-full h-40 sm:h-64 rounded-xl">
-              {banners.map((banner) => (
-                <SwiperSlide key={banner.id}>
-                  {banner.link ? (
-                    <Link href={banner.link} className="block w-full h-full relative">
-                      <Image src={banner.image} alt={banner.title} layout="fill" objectFit="cover" />
-                    </Link>
-                  ) : (
-                    <div className="w-full h-full relative">
-                      <Image src={banner.image} alt={banner.title} layout="fill" objectFit="cover" />
-                    </div>
-                  )}
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
-        )}
-
-        {/* Dynamic Horizontal Categories */}
-        {categories.length > 0 && (
-          <div>
-            <h2 className="text-lg font-bold text-gray-800 mb-3">दुकान की श्रेणियां</h2>
-            <div className="flex overflow-x-auto gap-4 pb-4 hide-scrollbar">
-              {categories.map((cat) => (
-                <div key={cat.id} className="flex flex-col items-center min-w-[72px] sm:min-w-[80px]">
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-2xl shadow-sm border border-gray-100 relative mb-2 overflow-hidden hover:shadow-md transition">
-                    <Image src={cat.image} alt={cat.name} layout="fill" objectFit="cover" />
-                  </div>
-                  <p className="text-[10px] sm:text-xs text-center font-bold text-gray-700 leading-tight">{cat.name}</p>
-                </div>
-              ))}
+      {/* Simple Banner Scroll (no Swiper) */}
+      <div className="py-6 px-4">
+        <div className="flex gap-4 overflow-x-auto pb-2">
+          {banners.map(banner => (
+            <div 
+              key={banner.id} 
+              className={`flex-shrink-0 w-72 h-32 ${banner.bg} rounded-xl flex items-center justify-center font-bold text-gray-800`}
+            >
+              {banner.title}
             </div>
-          </div>
-        )}
+          ))}
+        </div>
+      </div>
 
-        {/* Product Grid */}
-        <div>
-          <h2 className="text-lg font-bold text-gray-800 mb-3">आपके लिए खास (Best Sellers)</h2>
-          {loading ? (
-             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-               {[1,2,3,4].map(i => <div key={i} className="bg-gray-200 h-48 rounded-xl animate-pulse"></div>)}
-             </div>
-          ) : (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-              {products.map((product) => (
-                <div key={product.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden relative">
-                  <Link href={`/product/${product.id}`}>
-                    <div className="relative h-28 sm:h-36 w-full bg-white p-2 border-b">
-                      <Image src={product.image || '/placeholder.svg'} alt={product.name} layout="fill" objectFit="contain" />
-                    </div>
-                  </Link>
-                  <div className="p-3">
-                    <p className="text-xs text-gray-500 mb-1">{product.unit}</p>
-                    <Link href={`/product/${product.id}`}>
-                      <h3 className="text-xs sm:text-sm font-bold text-gray-800 leading-tight mb-2 h-8 overflow-hidden">{product.name}</h3>
-                    </Link>
-                    <div className="flex items-center justify-between mt-2">
-                      <div>
-                        <p className="text-sm font-extrabold text-black">₹{product.price}</p>
-                        {product.mrp && product.mrp > product.price && <p className="text-[10px] text-gray-400 line-through">₹{product.mrp}</p>}
-                      </div>
-                      <button 
-                        onClick={() => addToCart(product)} disabled={product.stock < 1}
-                        className={`px-3 py-1.5 rounded-lg font-bold text-xs border shadow-sm active:scale-95 transition-all ${product.stock < 1 ? 'bg-gray-100 text-gray-400 border-gray-200' : 'bg-green-50 text-green-700 border-green-600 hover:bg-green-600 hover:text-white'}`}
-                      >
-                        {product.stock < 1 ? 'OUT' : 'ADD'}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+      {/* Categories */}
+      <div className="px-4 py-6">
+        <h2 className="text-xl font-bold mb-4">Shop by Category</h2>
+        <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
+          {categories.map(cat => (
+            <Link 
+              key={cat.id}
+              href={`/shop?category=${cat.name.toLowerCase()}`}
+              className="bg-white p-4 rounded-xl text-center shadow-sm hover:shadow-md transition"
+            >
+              <div className="text-3xl mb-2">{cat.icon}</div>
+              <div className="text-sm font-medium">{cat.name}</div>
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      {/* Features */}
+      <div className="px-4 py-8">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto">
+          <div className="bg-white p-4 rounded-xl text-center">
+            <div className="text-2xl mb-2">🚴</div>
+            <p className="font-medium">Free Delivery</p>
+            <p className="text-sm text-gray-500">Orders above ₹200</p>
+          </div>
+          <div className="bg-white p-4 rounded-xl text-center">
+            <div className="text-2xl mb-2">💵</div>
+            <p className="font-medium">Cash on Delivery</p>
+            <p className="text-sm text-gray-500">Pay when delivered</p>
+          </div>
+          <div className="bg-white p-4 rounded-xl text-center">
+            <div className="text-2xl mb-2">📞</div>
+            <p className="font-medium">Quick Support</p>
+            <p className="text-sm text-gray-500">Call us anytime</p>
+          </div>
         </div>
       </div>
     </div>
