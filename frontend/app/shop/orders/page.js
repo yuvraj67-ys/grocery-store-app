@@ -268,7 +268,7 @@ export default function Orders() {
                       <button
                         onClick={() => {
                           const message = `Hi, regarding Order #${order.id?.slice(-6)}: `;
-                          window.open(`https://wa.me/919876543210?text=${encodeURIComponent(message)}`, '_blank');
+                          window.open(`https://wa.me/918112294119?text=${encodeURIComponent(message)}`, '_blank');
                         }}
                         className="px-4 py-2 border border-green-500 text-green-600 rounded-lg text-sm hover:bg-green-50 flex items-center gap-1"
                       >
