@@ -6,7 +6,7 @@ import hi from '../locales/hi.json';
 const LanguageContext = createContext();
 
 export const LanguageProvider = ({ children }) => {
-  const [lang, setLang] = useState('hi'); // Default to Hindi for village
+  const [lang, setLang] = useState('hi'); // Default to Hindi
 
   useEffect(() => {
     const saved = localStorage.getItem('app_lang');
@@ -21,6 +21,8 @@ export const LanguageProvider = ({ children }) => {
 
   const t = (keys) => {
     const dict = lang === 'hi' ? hi : en;
+    if (!dict) return keys;
+    
     const keysArray = keys.split('.');
     let value = dict;
     keysArray.forEach(k => { value = value ? value[k] : null; });
@@ -34,4 +36,8 @@ export const LanguageProvider = ({ children }) => {
   );
 };
 
-export const useLanguage = () => useContext(LanguageContext);
+// 👈 CRITICAL FIX: अगर Vercel build के समय context ना मिले, तो यह क्रैश होने से बचाएगा!
+export const useLanguage = () => {
+  const context = useContext(LanguageContext);
+  return context || { lang: 'hi', toggleLanguage: () => {}, t: (k) => k };
+};
