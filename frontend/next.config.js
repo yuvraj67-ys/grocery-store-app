@@ -8,7 +8,6 @@ const withPWA = require('next-pwa')({
 
 const nextConfig = {
   reactStrictMode: true,
-  // Removed 'output: standalone' - causes issues with server components on Vercel free tier
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'i.ibb.co' },
@@ -22,9 +21,8 @@ const nextConfig = {
   i18n: {
     locales: ['en', 'hi'],
     defaultLocale: 'hi',
-    localeDetection: true
+    localeDetection: false  // ✅ Must be boolean: true or false (not undefined)
   },
-  // Ensure compatibility with Vercel serverless
   webpack: (config) => {
     config.resolve.fallback = {
       ...config.resolve.fallback,
